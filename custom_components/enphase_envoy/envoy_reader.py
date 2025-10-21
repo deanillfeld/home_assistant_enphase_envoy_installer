@@ -740,6 +740,10 @@ class EnvoyMeteredWithCT(EnvoyMetered):
     def dpel_enabled(self):
         return self._resolve_path("endpoint_dpel.dynamic_pel_settings.enable")
 
+    @envoy_property(required_endpoint="endpoint_dpel")
+    def dpel_limit_value(self):
+        return self._resolve_path("endpoint_dpel.dynamic_pel_settings.limit_value_W")
+
 
 def get_envoydataclass(envoy_type, production_json):
     if envoy_type == ENVOY_MODEL_S:
@@ -1405,11 +1409,11 @@ class EnvoyReader:
             # Make sure the next poll will update the endpoint.
             self._clear_endpoint_cache("endpoint_production_power")
 
-    async def enable_dpel(self, watt, slew):
+    async def enable_dpel(self, watt, slew, export_limit):
         formatted_url = ENVOY_ENDPOINTS["dpel"]["url"].format(self.host)
         dynamic_pel_settings = {
             "enable": True,
-            "export_limit": True,
+            "export_limit": export_limit,
             "limit_value_W": float(watt),
             "slew_rate": float(slew),
             "enable_dynamic_limiting": False,
