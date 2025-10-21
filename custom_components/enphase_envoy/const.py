@@ -547,6 +547,14 @@ SENSORS = (
         device_class=SensorDeviceClass.TIMESTAMP,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
+    SensorEntityDescription(
+        key="dpel_limit_value",
+        name="Dynamic Power Export Limit Value",
+        native_unit_of_measurement=UnitOfPower.WATT
+        state_class=SensorStateClass.MEASUREMENT
+        device_class=SensorDeviceClass.POWER
+        suggested_display_precision=0
+    )
 )
 ADDITIONAL_METRICS.extend(
     [

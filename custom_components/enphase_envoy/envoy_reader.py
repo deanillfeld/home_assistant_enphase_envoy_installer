@@ -740,6 +740,10 @@ class EnvoyMeteredWithCT(EnvoyMetered):
     def dpel_enabled(self):
         return self._resolve_path("endpoint_dpel.dynamic_pel_settings.enable")
 
+    @envoy_property(required_endpoint="endpoint_dpel")
+    def dpel_limit_value(self):
+        return self._resolve_path("endpoint_dpel.dynamic_pel_settings.limit_value_W")
+
 
 def get_envoydataclass(envoy_type, production_json):
     if envoy_type == ENVOY_MODEL_S:
